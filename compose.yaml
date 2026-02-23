@@ -1,6 +1,23 @@
+# services:
+#   n8n:
+#     image: docker.n8n.io/n8nio/n8n
+#     container_name: n8n
+#     restart: unless-stopped
+#     ports:
+#       - "5678:5678"
+#     environment:
+#       - N8N_SECURE_COOKIE=false
+#       - N8N_PROXY_HOPS=1
+#       - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+#       - WEBHOOK_URL=${WEBHOOK_URL}
+#       - WEBHOOK_TUNNEL_URL=${WEBHOOK_URL}
+#     volumes:
+#       - ${N8N_DATA_DIR}:/home/node/.n8n
+
+
 services:
   n8n:
-    image: docker.n8n.io/n8nio/n8n
+    build: .
     container_name: n8n
     restart: unless-stopped
     ports:
@@ -11,5 +28,16 @@ services:
       - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
       - WEBHOOK_URL=${WEBHOOK_URL}
       - WEBHOOK_TUNNEL_URL=${WEBHOOK_URL}
+
+      # Чтобы были доступны Execute Command / Read-Write File (в n8n 2.x они часто выключены)
+      - NODES_EXCLUDE=[]
+
+      # Для бинарников (изображения/видео)
+      - N8N_DEFAULT_BINARY_DATA_MODE=filesystem
+      - N8N_BINARY_DATA_STORAGE_PATH=/home/node/.n8n/binaryData
+
+      # Разрешаем работу с локальной папкой /files
+      - N8N_RESTRICT_FILE_ACCESS_TO=/files;/home/node/.n8n/binaryData
     volumes:
       - ${N8N_DATA_DIR}:/home/node/.n8n
+      - ${N8N_DATA_DIR}:/files
