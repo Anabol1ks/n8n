@@ -21,10 +21,10 @@ help:
 	@echo "  make logs                        - логи n8n"
 
 up:
-	powershell -NoProfile -ExecutionPolicy Bypass -File .\start.ps1 -Url "$(URL)"
+	powershell -NoProfile -ExecutionPolicy Bypass -File ".\start.ps1" -Url "$(URL)"
 
 down:
-	powershell -NoProfile -ExecutionPolicy Bypass -File .\stop.ps1
+	powershell -NoProfile -ExecutionPolicy Bypass -File ".\stop.ps1"
 
 restart: down up
 
@@ -33,3 +33,4 @@ ps:
 
 logs:
 	docker logs -f n8n
+

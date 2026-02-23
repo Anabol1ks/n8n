@@ -10,6 +10,6 @@ services:
       - N8N_PROXY_HOPS=1
       - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
       - WEBHOOK_URL=${WEBHOOK_URL}
-      - WEBHOOK_TUNNEL_URL=${WEBHOOK_TUNNEL_URL}
+      - WEBHOOK_TUNNEL_URL=${WEBHOOK_URL}
     volumes:
       - ${N8N_DATA_DIR}:/home/node/.n8n
